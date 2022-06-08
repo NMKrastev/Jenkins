@@ -3,22 +3,17 @@ pipeline {
     agent any 
 
     stages {
-        stage ('Example') {
-            steps {
-                echo 'Hello World'
-            }
-        }
-        stage ('checkout dev') {
-            steps {
-                echo 'Cheking out from dev branch'
-                checkout([
-                    $class: 'GitSCM',
-                     branches: [[name: '*/dev']], 
-                     userRemoteConfigs: [[credentialsId: '2991024b-0053-4823-a02f-3813e3255eba', 
-                     url: 'https://github.com/NMKrastev/Jenkins.git']]
-                ])
-            }
-        }
+        // stage ('checkout dev') {
+        //     steps {
+        //         echo 'Cheking out from dev branch'
+        //         checkout([
+        //             $class: 'GitSCM',
+        //              branches: [[name: '*/dev']], 
+        //              userRemoteConfigs: [[credentialsId: '2991024b-0053-4823-a02f-3813e3255eba', 
+        //              url: 'https://github.com/NMKrastev/Jenkins.git']]
+        //         ])
+        //     }
+        // }
         stage ('Build') {
             steps {
                 sh "ls"
@@ -37,19 +32,19 @@ pipeline {
         //        sh 'java HelloWorld'
         //    }
         //}
-        stage ('house stages') {
-            steps {
-                echo 'Hello World'
-                script {
-                    def houses = ["green","blue","red"]
+        // stage ('house stages') {
+        //     steps {
+        //         echo 'Hello World'
+        //         script {
+        //             def houses = ["green","blue","red"]
 
-                    houses.each{
-                        house ->
-                        println(house)
-                    }
-                }
-            }
-        }
+        //             houses.each{
+        //                 house ->
+        //                 println(house)
+        //             }
+        //         }
+        //     }
+        // }
     }
     
     post {
