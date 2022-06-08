@@ -17,7 +17,6 @@ pipeline {
                      userRemoteConfigs: [[credentialsId: '2991024b-0053-4823-a02f-3813e3255eba', 
                      url: 'https://github.com/NMKrastev/Jenkins.git']]
                 ])
-                bat "dir"
             }
         }
         stage ('house stages') {
