@@ -1,60 +1,16 @@
 pipeline {
-
-    agent any 
+    agent any
 
     stages {
-        stage ('Example') {
+        stage('Build') {
             steps {
-                echo 'Hello World'
+                sh 'javac HelloWorld.java'
             }
         }
-        stage ('checkout dev') {
+        stage('Run') {
             steps {
-                echo 'Cheking out from dev branch'
-                checkout([
-                    $class: 'GitSCM',
-                     branches: [[name: '*/dev']], 
-                     userRemoteConfigs: [[credentialsId: '2991024b-0053-4823-a02f-3813e3255eba', 
-                     url: 'https://github.com/NMKrastev/Jenkins.git']]
-                ])
+                sh 'java HelloWorld'
             }
-        }
-        stage ('Build') {
-            steps {
-                sh "ls"
-                sh "pwd"
-                sh """
-                    cd Jenkins/src
-                    ls
-                    java -Djava.security.egd=file:/dev/./urandom HelloWorld
-                """
-                echo "-= Java Version  =-"
-                sh 'java HelloWorld.class'
-                sh "hello Niki"
-            }
-        }
-        stage ('house stages') {
-            steps {
-                echo 'Hello World'
-                script {
-                    def houses = ["green","blue","yellow"]
-
-                    houses.each{
-                        house ->
-                        println(house)
-                        if( house.equals("yellow")){
-                            currentBuild.result = "UNSTABLE"
-                        }
-
-                    }
-                }
-            }
-        }
-    }
-    
-    post {
-        always {
-            echo 'I will always say Hello again!'
         }
     }
 }
