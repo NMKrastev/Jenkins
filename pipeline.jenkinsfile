@@ -3,23 +3,16 @@ pipeline {
     agent any 
 
     stages {
-        stage ('Example') {
+        stage ('Build') {
             steps {
-                echo 'Hello World'
-            }
-        }
-        stage ('Example ME') {
-            steps {
-                echo 'Hello World'
-                script {
-                    def houses = ["red","blue","green"]
-
-                    houses.each{
-                        house ->
-                        println(house)
-
-                    }
-                }
+                sh "ls"
+                sh "pwd"
+                sh """
+                    cd Jenkins/src
+                    ls
+                    javac HelloWorld.java
+                """
+                input message: 'Need some input'
             }
         }
     }
