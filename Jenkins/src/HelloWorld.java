@@ -6,6 +6,6 @@ public class HelloWorld {
 
         String word = scanner.nextLine();
 
-        System.out.printf("Hello World %s", word);
+        System.out.printf("Hello, World %s", word);
     }
 }
