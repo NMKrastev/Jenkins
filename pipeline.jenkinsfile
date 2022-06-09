@@ -3,7 +3,7 @@ pipeline {
     agent any 
 
     stages {
-         stage ('checkout dev') {
+        stage ('checkout dev') {
             steps {
                 echo 'Cheking out from dev branch'
                 checkout([
@@ -23,9 +23,36 @@ pipeline {
                     ls
                     javac HelloWorld.java
                 """
-                input message: 'Need some input'
+                //input message: 'Need some input'
+                script {
+                    env.INPUT = input message: 'Please enter input',
+                             parameters: [string(defaultValue: '',
+                                          description: '',
+                                          name: 'Input')]
+                }
+        echo "Input: ${env.INPUT}"
             }
         }
+        // stage("input") {
+        //     steps {
+        //         script {
+        //             env.RELEASE_SCOPE = input message: 'User input required', ok: 'Release!',
+        //                     parameters: [choice(name: 'RELEASE_SCOPE', choices: 'patch\nminor\nmajor', description: 'What is the release scope?')]
+        //         }
+        //         echo "${env.RELEASE_SCOPE}"
+        //     }
+        // }
+        // stage ("Prompt for input") {
+        //     steps {
+        //         script {
+        //             env.INPUT = input message: 'Please enter input',
+        //                      parameters: [string(defaultValue: '',
+        //                                   description: '',
+        //                                   name: 'Input')]
+        //         }
+        // echo "Input: ${env.INPUT}"
+        //     }
+        // }
     }
     
     post {
