@@ -1,4 +1,4 @@
-
+def groovy
 
 pipeline {
 
@@ -16,16 +16,24 @@ pipeline {
         booleanParam(name: 'executeTests', defaultValue: true, description: '')
     }
     stages {
-        
-        stage("build") {
-            
+
+        stage("init") {
             steps {
-                echo 'building the application...'
+                script {
+                    groovy = load "scrip.groovy"
+                }
+            }
+        }
+        stage("build") {
+            steps {
+                script {
+                    groovy.buildApp()
+                }
+                //echo 'building the application...'
                 //sh "mvn install"
                 //echo "building version ${NEW_VERSION}"
             }
         }
-
         stage("test") {
             when {
                 expression {
@@ -33,15 +41,19 @@ pipeline {
                 }
             }
             steps {
-                echo 'testing the application...'
+                script {
+                    groovy.testApp()
+                }
+                //echo 'testing the application...'
             }
         }
-
         stage("deploy") {
-
             steps {
-                echo 'deploying the application...'
-                echo "deploying version ${params.VERSION}"
+                script {
+                    groovy.deployApp()
+                }
+                // echo 'deploying the application...'
+                // echo "deploying version ${params.VERSION}"
                 // withCredentials([
                 //     usernamePassword(credentials: 'server-credentials', usernameVariable: USER, passwordVariable: PASSWORD)
                 // ]) {
